@@ -1,3 +1,4 @@
+/* 法楽寺 DIGITAL ARCHIVE — コンパクト金色発光カード 2026-11-05 */
 :root {
   font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
   color: #f9edcc;
@@ -6,7 +7,7 @@
 }
 * { box-sizing: border-box; }
 html, body { width: 100%; min-width: 0; margin: 0; }
-.page { width: 100%; padding: 7px; }
+.page { width: 100%; padding: 4px; }
 .archive-card {
   position: relative;
   isolation: isolate;
@@ -15,17 +16,16 @@ html, body { width: 100%; min-width: 0; margin: 0; }
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 264px;
+  min-height: 0;
   overflow: hidden;
-  padding: 22px 17px;
+  padding: 10px 13px;
   border: 2px solid rgba(239, 189, 65, 0.75);
-  border-radius: 15px;
+  border-radius: 12px;
   background: #040404;
   box-shadow: 0 0 5px rgba(246, 188, 31, .1);
   color: #fbefcf;
   text-align: center;
   text-decoration: none;
-  /* 0秒:黒 → 1.5秒:金色に発光 → 3秒:黒 を繰り返す */
   animation: archiveGoldGlow 3s ease-in-out infinite;
 }
 .archive-card::before {
@@ -39,52 +39,52 @@ html, body { width: 100%; min-width: 0; margin: 0; }
   pointer-events: none;
 }
 .archive-card:focus-visible { outline: 3px solid #fff5b4; outline-offset: 2px; }
-.archive-card__eyebrow, .archive-card__title, .archive-card__description, .archive-card__action, .ornament {
-  position: relative;
-  z-index: 1;
-}
+.archive-card__eyebrow, .archive-card__title, .archive-card__description,
+.archive-card__action, .ornament { position: relative; z-index: 1; }
 .archive-card__eyebrow {
-  margin: 5px 0 6px;
-  font-size: clamp(13px, 3.7vw, 19px);
+  margin: 0 0 2px;
+  font-size: clamp(12px, 2.7vw, 15px);
   font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: .07em;
-  text-shadow: 0 2px 9px #0a0600;
+  line-height: 1.3;
+  letter-spacing: .04em;
+  animation: archiveTextGlow 3s ease-in-out infinite;
 }
 .archive-card__title {
-  font-size: clamp(24px, 6.5vw, 38px);
+  font-size: clamp(20px, 4.2vw, 29px);
   font-weight: 800;
-  line-height: 1.25;
-  letter-spacing: .055em;
+  line-height: 1.2;
+  letter-spacing: .04em;
   color: #ffe39b;
-  text-shadow: 0 2px 12px #160c00, 0 0 14px rgba(255, 206, 53, .32);
+  animation: archiveTextGlow 3s ease-in-out infinite;
 }
 .archive-card__description {
-  margin-top: 12px;
-  max-width: 800px;
-  padding: 6px 9px;
+  max-width: 850px;
+  margin-top: 7px;
+  padding: 4px 8px;
   border-radius: 8px;
   background: rgba(10, 8, 5, .68);
   color: #fff8e9;
-  font-size: clamp(12px, 3.2vw, 15px);
-  line-height: 1.65;
-  text-shadow: 0 1px 3px #000;
+  font-size: clamp(11px, 2.4vw, 13px);
+  line-height: 1.4;
+  animation: archiveTextGlow 3s ease-in-out infinite;
 }
 .archive-card__action {
   display: inline-block;
-  margin-top: 12px;
-  padding: 9px 19px;
+  margin-top: 8px;
+  padding: 6px 14px;
   border: 1px solid rgba(255, 229, 148, .9);
   border-radius: 999px;
   background: rgba(7, 6, 4, .84);
   color: #fff0bc;
-  font-size: clamp(13px, 3.2vw, 15px);
+  font-size: clamp(12px, 2.4vw, 13px);
   font-weight: 700;
+  line-height: 1.2;
   letter-spacing: .02em;
   box-shadow: 0 0 12px rgba(255, 212, 69, .16);
+  animation: archiveTextGlow 3s ease-in-out infinite;
 }
-.ornament { color: #eac46a; font-size: 11px; }
-.ornament--bottom { margin-top: 8px; }
+.ornament { display: none; }
+.desktop-break { display: none; }
 @keyframes archiveGoldGlow {
   0%, 100% {
     border-color: rgba(225, 174, 51, .55);
@@ -94,46 +94,31 @@ html, body { width: 100%; min-width: 0; margin: 0; }
   50% {
     border-color: #ffe79b;
     background-color: #a87612;
-    box-shadow: 0 0 28px rgba(255, 218, 74, .96), 0 0 58px rgba(255, 179, 20, .78), 0 0 84px rgba(255, 165, 12, .46), inset 0 0 62px rgba(255, 242, 158, .56);
+    box-shadow: 0 0 28px rgba(255, 218, 74, .96),
+                0 0 58px rgba(255, 179, 20, .78),
+                0 0 84px rgba(255, 165, 12, .46),
+                inset 0 0 62px rgba(255, 242, 158, .56);
   }
 }
 @keyframes halo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-@media (max-width: 640px) {
-  .archive-card { min-height: 300px; padding: 17px 13px; }
-  .archive-card__description { margin-top: 11px; }
-  .desktop-break { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .archive-card, .archive-card::before { animation: none; }
-  .archive-card { border-color: #d7ab49; box-shadow: 0 0 12px rgba(255, 214, 68, .38); }
-}
-
-/* 2026-11-05: 文字・枠・背景を3秒で同期して発光 */
-.archive-card__eyebrow,
-.archive-card__title,
-.archive-card__description,
-.archive-card__action,
-.ornament {
-  animation: archiveTextGlow 3s ease-in-out infinite;
-}
 @keyframes archiveTextGlow {
-  0%, 100% {
-    text-shadow: 0 1px 4px rgba(0,0,0,.98), 0 0 2px rgba(255,214,89,.18);
-  }
+  0%, 100% { text-shadow: 0 1px 4px rgba(0,0,0,.98), 0 0 2px rgba(255,214,89,.18); }
   50% {
-    text-shadow:
-      0 1px 3px rgba(0,0,0,.96),
-      0 0 8px rgba(255,249,214,1),
-      0 0 20px rgba(255,225,77,.96),
-      0 0 32px rgba(255,176,17,.82);
+    text-shadow: 0 1px 3px rgba(0,0,0,.96),
+                 0 0 8px rgba(255,249,214,1),
+                 0 0 20px rgba(255,225,77,.96),
+                 0 0 32px rgba(255,176,17,.82);
   }
 }
+@media (max-width: 640px) {
+  .archive-card { min-height: 0; padding: 11px 10px; }
+  .archive-card__title { font-size: clamp(19px, 5vw, 24px); }
+  .archive-card__description { margin-top: 7px; padding: 4px 6px; font-size: 11.5px; line-height: 1.4; }
+  .archive-card__action { margin-top: 8px; padding: 7px 12px; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .archive-card__eyebrow,
-  .archive-card__title,
-  .archive-card__description,
-  .archive-card__action,
-  .ornament {
-    animation: none;
-  }
+  .archive-card, .archive-card::before,
+  .archive-card__eyebrow, .archive-card__title,
+  .archive-card__description, .archive-card__action { animation: none; }
+  .archive-card { border-color: #d7ab49; box-shadow: 0 0 12px rgba(255, 214, 68, .38); }
 }
