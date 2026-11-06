@@ -122,3 +122,93 @@ html, body { width: 100%; min-width: 0; margin: 0; }
   .archive-card__description, .archive-card__action { animation: none; }
   .archive-card { border-color: #d7ab49; box-shadow: 0 0 12px rgba(255, 214, 68, .38); }
 }
+
+
+/* BUDDHA SEARCH — 銀色点滅ボタン */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.archive-card--silver {
+  border-color: rgba(190, 205, 225, .75);
+  color: #eef4ff;
+  animation: searchSilverGlow 3s ease-in-out infinite;
+}
+
+.archive-card--silver::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(238, 247, 255, .80) 0%,
+    rgba(166, 194, 224, .42) 42%,
+    transparent 73%
+  );
+}
+
+.archive-card--silver:focus-visible {
+  outline-color: #e7f2ff;
+}
+
+.archive-card--silver .archive-card__title {
+  color: #e6efff;
+}
+
+.archive-card--silver .archive-card__action {
+  border-color: rgba(210, 227, 246, .9);
+  color: #edf5ff;
+  box-shadow: 0 0 12px rgba(190, 214, 245, .25);
+}
+
+.archive-card--silver .archive-card__eyebrow,
+.archive-card--silver .archive-card__title,
+.archive-card--silver .archive-card__description,
+.archive-card--silver .archive-card__action {
+  animation: searchSilverTextGlow 3s ease-in-out infinite;
+}
+
+@keyframes searchSilverGlow {
+  0%, 100% {
+    border-color: rgba(160, 180, 205, .55);
+    background-color: #040609;
+    box-shadow: 0 0 5px rgba(160, 190, 225, .12);
+  }
+  50% {
+    border-color: #f0f7ff;
+    background-color: #687f9c;
+    box-shadow:
+      0 0 28px rgba(220, 237, 255, .95),
+      0 0 58px rgba(170, 205, 240, .75),
+      0 0 84px rgba(140, 185, 230, .45),
+      inset 0 0 62px rgba(240, 248, 255, .55);
+  }
+}
+
+@keyframes searchSilverTextGlow {
+  0%, 100% {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .95);
+  }
+  50% {
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, .95),
+      0 0 8px rgba(245, 250, 255, 1),
+      0 0 20px rgba(210, 230, 255, .95),
+      0 0 32px rgba(150, 195, 240, .8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-card--silver,
+  .archive-card--silver .archive-card__eyebrow,
+  .archive-card--silver .archive-card__title,
+  .archive-card--silver .archive-card__description,
+  .archive-card--silver .archive-card__action {
+    animation: none;
+  }
+  .archive-card--silver {
+    border-color: #b9cce2;
+    background-color: #101923;
+    box-shadow: 0 0 12px rgba(190, 215, 245, .4);
+  }
+}
+
