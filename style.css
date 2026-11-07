@@ -212,3 +212,15 @@ html, body { width: 100%; min-width: 0; margin: 0; }
   }
 }
 
+
+/* 金色・銀色の交互点滅 */
+.archive-card--silver,
+.archive-card--silver::before,
+.archive-card--silver .archive-card__eyebrow,
+.archive-card--silver .archive-card__title,
+.archive-card--silver .archive-card__description,
+.archive-card--silver .archive-card__action {
+  animation-delay: -1.5s;
+}
+
+
