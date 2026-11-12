@@ -1,226 +1,24 @@
-/* 法楽寺 DIGITAL ARCHIVE — コンパクト金色発光カード 2026-11-05 */
-:root {
-  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-  color: #f9edcc;
-  background: #0a0804;
-  -webkit-font-smoothing: antialiased;
+/* 既存CSS keyframes発光を再利用し、画像は変更せず外枠のみ点滅 */
+:root { font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; }
+* { box-sizing:border-box; }
+html,body { width:100%; min-width:0; margin:0; background:transparent; }
+.button-gallery { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; max-width:648px; margin:0 auto; padding:14px; }
+.temple-button { position:relative; display:block; flex:0 0 auto; width:100%; aspect-ratio:720 / 355; border-radius:12px; outline:none; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+.temple-button img { display:block; width:100%; height:100%; object-fit:contain; border-radius:inherit; user-select:none; }
+.temple-button::after {
+  position:absolute; inset:0; border:3px solid rgb(var(--glow-rgb) / .18); border-radius:inherit;
+  box-shadow:inset 0 0 3px rgb(var(--glow-rgb) / .10);
+  content:""; pointer-events:none;
+  animation:templeFrameGlow 4.5s ease-in-out infinite backwards;
+  animation-delay:var(--glow-delay);
 }
-* { box-sizing: border-box; }
-html, body { width: 100%; min-width: 0; margin: 0; }
-.page { width: 100%; padding: 4px; }
-.archive-card {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 0;
-  overflow: hidden;
-  padding: 10px 13px;
-  border: 2px solid rgba(239, 189, 65, 0.75);
-  border-radius: 12px;
-  background: #040404;
-  box-shadow: 0 0 5px rgba(246, 188, 31, .1);
-  color: #fbefcf;
-  text-align: center;
-  text-decoration: none;
-  animation: archiveGoldGlow 3s ease-in-out infinite;
+.temple-button--gold { --glow-rgb:255 208 76; --glow-delay:0s; }
+.temple-button--silver { --glow-rgb:204 229 255; --glow-delay:1.5s; }
+.temple-button--bronze { --glow-rgb:255 126 77; --glow-delay:3s; }
+@keyframes templeFrameGlow {
+  0%,30%,100% { border-color:rgb(var(--glow-rgb) / .18); box-shadow:0 0 2px rgb(var(--glow-rgb) / .06), inset 0 0 3px rgb(var(--glow-rgb) / .09); }
+  10%,17% { border-color:rgb(var(--glow-rgb) / 1); box-shadow:0 0 11px rgb(var(--glow-rgb) / .84),0 0 24px rgb(var(--glow-rgb) / .43),inset 0 0 10px rgb(var(--glow-rgb) / .30); }
 }
-.archive-card::before {
-  position: absolute;
-  z-index: 0;
-  inset: -25%;
-  background: radial-gradient(ellipse at center, rgba(255, 239, 151, .74) 0%, rgba(255, 193, 40, .34) 42%, transparent 73%);
-  content: "";
-  opacity: 0;
-  animation: halo 3s ease-in-out infinite;
-  pointer-events: none;
-}
-.archive-card:focus-visible { outline: 3px solid #fff5b4; outline-offset: 2px; }
-.archive-card__eyebrow, .archive-card__title, .archive-card__description,
-.archive-card__action, .ornament { position: relative; z-index: 1; }
-.archive-card__eyebrow {
-  margin: 0 0 2px;
-  font-size: clamp(12px, 2.7vw, 15px);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: .04em;
-  animation: archiveTextGlow 3s ease-in-out infinite;
-}
-.archive-card__title {
-  font-size: clamp(20px, 4.2vw, 29px);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: .04em;
-  color: #ffe39b;
-  animation: archiveTextGlow 3s ease-in-out infinite;
-}
-.archive-card__description {
-  max-width: 850px;
-  margin-top: 7px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  background: rgba(10, 8, 5, .68);
-  color: #fff8e9;
-  font-size: clamp(11px, 2.4vw, 13px);
-  line-height: 1.4;
-  animation: archiveTextGlow 3s ease-in-out infinite;
-}
-.archive-card__action {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 6px 14px;
-  border: 1px solid rgba(255, 229, 148, .9);
-  border-radius: 999px;
-  background: rgba(7, 6, 4, .84);
-  color: #fff0bc;
-  font-size: clamp(12px, 2.4vw, 13px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: .02em;
-  box-shadow: 0 0 12px rgba(255, 212, 69, .16);
-  animation: archiveTextGlow 3s ease-in-out infinite;
-}
-.ornament { display: none; }
-.desktop-break { display: none; }
-@keyframes archiveGoldGlow {
-  0%, 100% {
-    border-color: rgba(225, 174, 51, .55);
-    background-color: #040404;
-    box-shadow: 0 0 5px rgba(242, 179, 18, .10), inset 0 0 7px rgba(242, 179, 18, .06);
-  }
-  50% {
-    border-color: #ffe79b;
-    background-color: #a87612;
-    box-shadow: 0 0 28px rgba(255, 218, 74, .96),
-                0 0 58px rgba(255, 179, 20, .78),
-                0 0 84px rgba(255, 165, 12, .46),
-                inset 0 0 62px rgba(255, 242, 158, .56);
-  }
-}
-@keyframes halo { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-@keyframes archiveTextGlow {
-  0%, 100% { text-shadow: 0 1px 4px rgba(0,0,0,.98), 0 0 2px rgba(255,214,89,.18); }
-  50% {
-    text-shadow: 0 1px 3px rgba(0,0,0,.96),
-                 0 0 8px rgba(255,249,214,1),
-                 0 0 20px rgba(255,225,77,.96),
-                 0 0 32px rgba(255,176,17,.82);
-  }
-}
-@media (max-width: 640px) {
-  .archive-card { min-height: 0; padding: 11px 10px; }
-  .archive-card__title { font-size: clamp(19px, 5vw, 24px); }
-  .archive-card__description { margin-top: 7px; padding: 4px 6px; font-size: 11.5px; line-height: 1.4; }
-  .archive-card__action { margin-top: 8px; padding: 7px 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .archive-card, .archive-card::before,
-  .archive-card__eyebrow, .archive-card__title,
-  .archive-card__description, .archive-card__action { animation: none; }
-  .archive-card { border-color: #d7ab49; box-shadow: 0 0 12px rgba(255, 214, 68, .38); }
-}
-
-
-/* BUDDHA SEARCH — 銀色点滅ボタン */
-.page {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.archive-card--silver {
-  border-color: rgba(190, 205, 225, .75);
-  color: #eef4ff;
-  animation: searchSilverGlow 3s ease-in-out infinite;
-}
-
-.archive-card--silver::before {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(238, 247, 255, .80) 0%,
-    rgba(166, 194, 224, .42) 42%,
-    transparent 73%
-  );
-}
-
-.archive-card--silver:focus-visible {
-  outline-color: #e7f2ff;
-}
-
-.archive-card--silver .archive-card__title {
-  color: #e6efff;
-}
-
-.archive-card--silver .archive-card__action {
-  border-color: rgba(210, 227, 246, .9);
-  color: #edf5ff;
-  box-shadow: 0 0 12px rgba(190, 214, 245, .25);
-}
-
-.archive-card--silver .archive-card__eyebrow,
-.archive-card--silver .archive-card__title,
-.archive-card--silver .archive-card__description,
-.archive-card--silver .archive-card__action {
-  animation: searchSilverTextGlow 3s ease-in-out infinite;
-}
-
-@keyframes searchSilverGlow {
-  0%, 100% {
-    border-color: rgba(160, 180, 205, .55);
-    background-color: #040609;
-    box-shadow: 0 0 5px rgba(160, 190, 225, .12);
-  }
-  50% {
-    border-color: #f0f7ff;
-    background-color: #687f9c;
-    box-shadow:
-      0 0 28px rgba(220, 237, 255, .95),
-      0 0 58px rgba(170, 205, 240, .75),
-      0 0 84px rgba(140, 185, 230, .45),
-      inset 0 0 62px rgba(240, 248, 255, .55);
-  }
-}
-
-@keyframes searchSilverTextGlow {
-  0%, 100% {
-    text-shadow: 0 1px 4px rgba(0, 0, 0, .95);
-  }
-  50% {
-    text-shadow:
-      0 1px 3px rgba(0, 0, 0, .95),
-      0 0 8px rgba(245, 250, 255, 1),
-      0 0 20px rgba(210, 230, 255, .95),
-      0 0 32px rgba(150, 195, 240, .8);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .archive-card--silver,
-  .archive-card--silver .archive-card__eyebrow,
-  .archive-card--silver .archive-card__title,
-  .archive-card--silver .archive-card__description,
-  .archive-card--silver .archive-card__action {
-    animation: none;
-  }
-  .archive-card--silver {
-    border-color: #b9cce2;
-    background-color: #101923;
-    box-shadow: 0 0 12px rgba(190, 215, 245, .4);
-  }
-}
-
-
-/* 金色・銀色の交互点滅 */
-.archive-card--silver,
-.archive-card--silver::before,
-.archive-card--silver .archive-card__eyebrow,
-.archive-card--silver .archive-card__title,
-.archive-card--silver .archive-card__description,
-.archive-card--silver .archive-card__action {
-  animation-delay: -1.5s;
-}
-
-
+.temple-button:focus-visible { outline:3px solid rgb(var(--glow-rgb) / 1); outline-offset:3px; }
+@media(max-width:640px) { .button-gallery { gap:10px; padding:12px; } }
+@media(prefers-reduced-motion:reduce) { .temple-button::after { animation:none; border-color:rgb(var(--glow-rgb) / .65); box-shadow:inset 0 0 5px rgb(var(--glow-rgb) / .25); } }
