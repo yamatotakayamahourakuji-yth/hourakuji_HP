@@ -5,4 +5,28 @@
 <a class="temple-button temple-button--gold" href="https://yamatotakayamahourakuji-yth.github.io/horakuji-digital-archive/" target="_blank" rel="noopener noreferrer" aria-label="デジタルアーカイブを開く"><img src="./assets/01_gold_archive_720x355.png" alt="法楽寺 デジタルアーカイブ" width="720" height="355" draggable="false"></a>
 <a class="temple-button temple-button--silver" href="https://yamatotakayamahourakuji-yth.github.io/search/" target="_blank" rel="noopener noreferrer" aria-label="仏様検索システムを開く"><img src="./assets/02_silver_search_720x355.png" alt="法楽寺 仏様検索システム" width="720" height="355" draggable="false"></a>
 <a class="temple-button temple-button--bronze" href="https://yamatotakayamahourakuji-yth.github.io/omikuji/" target="_blank" rel="noopener noreferrer" aria-label="おみくじを開く"><img src="./assets/03_bronze_omikuji_720x355.png" alt="法楽寺 おみくじ" width="720" height="355" draggable="false"></a>
-</main></body></html>
+</main><style>
+/* One image per Notion embed: fit the frame without internal scrolling. */
+html.single-button,html.single-button body { height:100%; overflow:hidden; }
+.single-button .button-gallery { height:100vh; height:100svh; max-width:none; padding:12px; gap:0; justify-content:flex-start; }
+.single-button .temple-button { width:min(620px,100%,calc((100svh - 24px) * 720 / 355)); }
+</style>
+<script>
+(() => {
+  const colour = new URLSearchParams(location.search).get('button');
+  const offsets = {gold:0,silver:1500,bronze:3000};
+  if (!Object.prototype.hasOwnProperty.call(offsets,colour)) return;
+  document.documentElement.classList.add('single-button');
+  document.querySelectorAll('.temple-button').forEach(button => {
+    if (!button.classList.contains('temple-button--' + colour)) button.remove();
+  });
+  const button = document.querySelector('.temple-button');
+  // Shared wall clock keeps independently loaded embeds in gold/silver/bronze order.
+  function syncGlow() {
+    const phase = ((Date.now() - offsets[colour]) % 4500 + 4500) % 4500;
+    button.style.setProperty('--glow-delay',(-phase / 1000) + 's');
+  }
+  syncGlow();
+})();
+</script>
+</body></html>
