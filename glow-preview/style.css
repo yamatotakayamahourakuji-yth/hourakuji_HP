@@ -1,0 +1,24 @@
+/* 既存CSS keyframes発光を再利用し、画像は変更せず外枠のみ点滅 */
+:root { font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; }
+* { box-sizing:border-box; }
+html,body { width:100%; min-width:0; margin:0; background:transparent; }
+.button-gallery { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; max-width:648px; margin:0 auto; padding:14px; }
+.temple-button { position:relative; display:block; flex:0 0 auto; width:100%; aspect-ratio:720 / 355; border-radius:12px; outline:none; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+.temple-button img { display:block; width:100%; height:100%; object-fit:contain; border-radius:inherit; user-select:none; }
+.temple-button::after {
+  position:absolute; inset:0; border:3px solid rgb(var(--glow-rgb) / .18); border-radius:inherit;
+  box-shadow:inset 0 0 3px rgb(var(--glow-rgb) / .10);
+  content:""; pointer-events:none;
+  animation:templeFrameGlow 4.5s ease-in-out infinite backwards;
+  animation-delay:var(--glow-delay);
+}
+.temple-button--gold { --glow-rgb:255 208 76; --glow-delay:0s; }
+.temple-button--silver { --glow-rgb:204 229 255; --glow-delay:1.5s; }
+.temple-button--bronze { --glow-rgb:255 126 77; --glow-delay:3s; }
+@keyframes templeFrameGlow {
+  0%,30%,100% { border-color:rgb(var(--glow-rgb) / .18); box-shadow:0 0 2px rgb(var(--glow-rgb) / .06), inset 0 0 3px rgb(var(--glow-rgb) / .09); }
+  10%,17% { border-color:rgb(var(--glow-rgb) / 1); box-shadow:0 0 11px rgb(var(--glow-rgb) / .84),0 0 24px rgb(var(--glow-rgb) / .43),inset 0 0 10px rgb(var(--glow-rgb) / .30); }
+}
+.temple-button:focus-visible { outline:3px solid rgb(var(--glow-rgb) / 1); outline-offset:3px; }
+@media(max-width:640px) { .button-gallery { gap:10px; padding:12px; } }
+@media(prefers-reduced-motion:reduce) { .temple-button::after { animation:none; border-color:rgb(var(--glow-rgb) / .65); box-shadow:inset 0 0 5px rgb(var(--glow-rgb) / .25); } }
