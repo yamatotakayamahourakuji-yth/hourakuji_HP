@@ -5,38 +5,52 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="法楽寺 授与品の横スクロール技術検証（仮カード・本番未反映）">
-  <title>法楽寺｜授与品 横スクロール技術確認</title>
+  <meta name="description" content="法楽寺 授与品の横スクロール・モダンデザイン試作（仮カード・本番未反映）">
+  <title>法楽寺｜授与品コレクション デザイン確認</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./slider.js" defer></script>
 </head>
 <body>
   <section class="offerings" aria-labelledby="offerings-heading">
-    <div class="heading">
-      <div>
-        <h2 id="offerings-heading">授与品のご案内</h2>
-        <p class="subtitle">横にスワイプ・矢印でご覧いただけます</p>
+    <header class="collection-header">
+      <div class="collection-heading">
+        <p class="eyebrow">HOURAKUJI <span aria-hidden="true">/</span> THE COLLECTION</p>
+        <h2 id="offerings-heading">授与品のご案内<span class="heading-dot" aria-hidden="true">.</span></h2>
+        <p class="subtitle">横にスワイプ、または矢印からご覧ください</p>
       </div>
       <div class="navigation" aria-label="授与品の横送り">
-        <button id="offerings-prev" type="button" aria-label="前の授与品へ">‹</button>
-        <button id="offerings-next" type="button" aria-label="次の授与品へ">›</button>
+        <button id="offerings-prev" type="button" aria-label="前の授与品へ" aria-controls="offerings-track"><span aria-hidden="true">←</span></button>
+        <button id="offerings-next" type="button" aria-label="次の授与品へ" aria-controls="offerings-track"><span aria-hidden="true">→</span></button>
       </div>
-    </div>
+    </header>
+
     <div id="offerings-track" class="track" tabindex="0" role="region" aria-label="授与品の横スクロール一覧">
-      <article class="item">
-        <div class="image-placeholder"><span class="placeholder-label">仮画像・未掲載</span><span class="placeholder-icon" aria-hidden="true">御守</span></div>
-        <h3>御守り</h3><p>実物写真と紹介文は準備中</p>
+      <article class="item item--navy">
+        <div class="visual" role="img" aria-label="御守り：写真未掲載の仮デザイン">
+          <span class="visual-label">IMAGE PENDING</span>
+          <span class="visual-art visual-art--one" aria-hidden="true"></span>
+          <span class="visual-name" aria-hidden="true">OMAMORI</span>
+        </div>
+        <div class="item-copy"><p class="item-number">01 <span aria-hidden="true">/</span> COLLECTION</p><h3>御守り</h3><p class="item-note">実物写真・ご案内は準備中</p></div>
       </article>
-      <article class="item">
-        <div class="image-placeholder"><span class="placeholder-label">仮画像・未掲載</span><span class="placeholder-icon" aria-hidden="true">御朱印</span></div>
-        <h3>御朱印</h3><p>実物写真と紹介文は準備中</p>
+      <article class="item item--sage">
+        <div class="visual" role="img" aria-label="御朱印：写真未掲載の仮デザイン">
+          <span class="visual-label">IMAGE PENDING</span>
+          <span class="visual-art visual-art--two" aria-hidden="true"></span>
+          <span class="visual-name" aria-hidden="true">GOSHUIN</span>
+        </div>
+        <div class="item-copy"><p class="item-number">02 <span aria-hidden="true">/</span> COLLECTION</p><h3>御朱印</h3><p class="item-note">実物写真・ご案内は準備中</p></div>
       </article>
-      <article class="item">
-        <div class="image-placeholder"><span class="placeholder-label">仮画像・未掲載</span><span class="placeholder-icon" aria-hidden="true">授与品</span></div>
-        <h3>その他の授与品</h3><p>実物写真と紹介文は準備中</p>
+      <article class="item item--rose">
+        <div class="visual" role="img" aria-label="その他の授与品：写真未掲載の仮デザイン">
+          <span class="visual-label">IMAGE PENDING</span>
+          <span class="visual-art visual-art--three" aria-hidden="true"></span>
+          <span class="visual-name" aria-hidden="true">MORE GIFTS</span>
+        </div>
+        <div class="item-copy"><p class="item-number">03 <span aria-hidden="true">/</span> COLLECTION</p><h3>その他の授与品</h3><p class="item-note">実物写真・ご案内は準備中</p></div>
       </article>
     </div>
-    <p class="notice">※ 横スクロールの技術確認用です。画像・名称・授与内容は未確定です。</p>
+    <p class="notice">DESIGN PREVIEW <span aria-hidden="true">—</span> 横スクロールの確認用です。実際の授与品写真・名称・授与内容は未確定です。</p>
   </section>
 </body>
 </html>
