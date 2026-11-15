@@ -15,4 +15,33 @@ function schedule(){clearInterval(timer);if(!paused&&!document.hidden)timer=setI
 function move(step){if(busy)return;busy=true;position+=step;paint();setTimeout(()=>{if(position>=6)position=3;if(position<=2)position=5;paint(false);busy=false},1450)}
 document.querySelector('#next').onclick=()=>{move(1);schedule()};document.querySelector('#prev').onclick=()=>{move(-1);schedule()};dots.forEach((d,i)=>d.onclick=()=>{if(busy)return;position=i+3;paint();schedule()});pause.onclick=()=>{paused=!paused;schedule()};document.addEventListener('visibilitychange',schedule);
 viewport.addEventListener('pointerdown',e=>{startX=e.clientX;startY=e.clientY});viewport.addEventListener('pointerup',e=>{if(startX!==undefined&&Math.abs(e.clientX-startX)>40&&Math.abs(e.clientX-startX)>Math.abs(e.clientY-startY)){move(e.clientX<startX?1:-1);schedule()}startX=undefined});viewport.addEventListener('pointercancel',()=>startX=undefined);new ResizeObserver(()=>paint(false)).observe(viewport);paint(false);schedule();
-</script></html>
+</script>
+<style>
+.slide img{cursor:zoom-in}.slide img:focus-visible{outline:3px solid #805b18;outline-offset:-4px}
+.zoom-dialog{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:12px;border:0;background:#17130ff5;color:#fff;overflow:hidden}
+.zoom-dialog::backdrop{background:#17130ff5}.zoom-inner{height:100%;display:flex;flex-direction:column;align-items:center;gap:8px}.zoom-image{min-height:0;flex:1;width:100%;object-fit:contain}.zoom-bar{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;flex-shrink:0}.zoom-bar button,.zoom-close{background:#fffaf1;color:#493c2a;min-width:44px;min-height:44px}.zoom-close{align-self:flex-end;font-size:24px}.zoom-bar a{color:#fff}.zoom-count{min-width:6em;text-align:center}
+</style>
+<dialog class="zoom-dialog" aria-label="画像の拡大表示"><div class="zoom-inner"><button class="zoom-close" aria-label="拡大表示を閉じる">×</button><img class="zoom-image" alt=""><div class="zoom-bar"><button class="zoom-prev" aria-label="前の拡大画像">‹</button><span class="zoom-count" aria-live="polite"></span><button class="zoom-next" aria-label="次の拡大画像">›</button><a class="zoom-newtab" target="_blank" rel="noopener">別タブで大きく表示</a></div></div></dialog>
+<script>
+(()=>{
+const pictures=[...document.querySelectorAll('.slide img')],unique=[...new Map(pictures.map(img=>[img.src,{src:img.src,alt:img.alt}])).values()];
+const dialog=document.querySelector('.zoom-dialog'),big=dialog.querySelector('.zoom-image'),count=dialog.querySelector('.zoom-count'),external=dialog.querySelector('.zoom-newtab');
+let current=0,previousPaused=true,openerElement=null,downX=0,downY=0;
+const requested=new URLSearchParams(location.search).get('image'),viewer=requested!==null;
+function url(i){const u=new URL(location.href);u.searchParams.set('image',i);return u.href}
+function show(i){current=(i+unique.length)%unique.length;big.src=unique[current].src;big.alt=unique[current].alt;count.textContent=(current+1)+' / '+unique.length;external.href=url(current)}
+function open(i,element){previousPaused=paused;paused=true;schedule();openerElement=element;
+if(window.self!==window.top&&!viewer){const w=window.open(url(i),'_blank');if(w){return}}
+show(i);if(!dialog.open)dialog.showModal();dialog.querySelector('.zoom-close').focus()}
+function close(){if(viewer){window.close();if(!window.closed){location.href=location.href.split('?')[0]}return}dialog.close()}
+dialog.addEventListener('close',()=>{paused=previousPaused;schedule();if(openerElement)openerElement.focus()});
+dialog.querySelector('.zoom-close').onclick=close;dialog.querySelector('.zoom-prev').onclick=()=>show(current-1);dialog.querySelector('.zoom-next').onclick=()=>show(current+1);
+dialog.addEventListener('click',e=>{if(e.target===dialog||e.target===dialog.querySelector('.zoom-inner'))close()});
+dialog.addEventListener('cancel',e=>{e.preventDefault();close()});
+dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();show(current-1)}if(e.key==='ArrowRight'){e.preventDefault();show(current+1)}});
+pictures.forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label',img.alt+'を拡大');img.addEventListener('pointerdown',e=>{downX=e.clientX;downY=e.clientY});img.addEventListener('click',e=>{if(e.detail!==0&&(Math.abs(e.clientX-downX)>20||Math.abs(e.clientY-downY)>20))return;open(unique.findIndex(x=>x.src===img.src),img)});img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(unique.findIndex(x=>x.src===img.src),img)}})});
+window.addEventListener('focus',()=>{if(!dialog.open&&!viewer){paused=previousPaused;schedule()}});
+if(viewer){paused=true;schedule();show(Number(requested)||0);dialog.showModal();external.hidden=true}
+})();
+</script>
+</html>
