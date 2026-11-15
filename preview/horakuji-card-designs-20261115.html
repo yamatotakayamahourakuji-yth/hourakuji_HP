@@ -21,12 +21,12 @@ viewport.addEventListener('pointerdown',e=>{startX=e.clientX;startY=e.clientY});
 (()=>{
 const pictures=[...document.querySelectorAll('.slide img')],unique=[...new Map(pictures.map(img=>[img.src,{src:img.src,alt:img.alt}])).values()];
 const dialog=document.querySelector('.zoom-dialog'),big=dialog.querySelector('.zoom-image'),count=dialog.querySelector('.zoom-count'),external=dialog.querySelector('.zoom-newtab');
-let current=0,previousPaused=true,openerElement=null,downX=0,downY=0;
+let current=0,previousPaused=true,openerElement=null,newTabOpen=false,downX=0,downY=0;
 const requested=new URLSearchParams(location.search).get('image'),viewer=requested!==null;
 function url(i){const u=new URL(location.href);u.searchParams.set('image',i);return u.href}
 function show(i){current=(i+unique.length)%unique.length;big.src=unique[current].src;big.alt=unique[current].alt;count.textContent=(current+1)+' / '+unique.length;external.href=url(current)}
 function open(i,element){previousPaused=paused;paused=true;schedule();openerElement=element;
-if(window.self!==window.top&&!viewer){const w=window.open(url(i),'_blank');if(w){return}}
+if(window.self!==window.top&&!viewer){const w=window.open(url(i),'_blank');if(w){newTabOpen=true;return}}
 show(i);if(!dialog.open)dialog.showModal();dialog.querySelector('.zoom-close').focus()}
 function close(){if(viewer){window.close();if(!window.closed){location.href=location.href.split('?')[0]}return}dialog.close()}
 dialog.addEventListener('close',()=>{paused=previousPaused;schedule();if(openerElement)openerElement.focus()});
@@ -35,7 +35,7 @@ dialog.addEventListener('click',e=>{if(e.target===dialog||e.target===dialog.quer
 dialog.addEventListener('cancel',e=>{e.preventDefault();close()});
 dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();show(current-1)}if(e.key==='ArrowRight'){e.preventDefault();show(current+1)}});
 pictures.forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.setAttribute('aria-label',img.alt+'を拡大');img.addEventListener('pointerdown',e=>{downX=e.clientX;downY=e.clientY});img.addEventListener('click',e=>{if(e.detail!==0&&(Math.abs(e.clientX-downX)>20||Math.abs(e.clientY-downY)>20))return;open(unique.findIndex(x=>x.src===img.src),img)});img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(unique.findIndex(x=>x.src===img.src),img)}})});
-window.addEventListener('focus',()=>{if(!dialog.open&&!viewer){paused=previousPaused;schedule()}});
+window.addEventListener('focus',()=>{if(newTabOpen&&!dialog.open&&!viewer){newTabOpen=false;paused=previousPaused;schedule()}});
 if(viewer){paused=true;schedule();show(Number(requested)||0);dialog.showModal();external.hidden=true}
 })();
 </script>
